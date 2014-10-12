@@ -13,3 +13,9 @@ The solution contains two projects:
   1. BasicTableBuilder, when the entire file is one big table.
   2. SimpleHeaderTable - when the entire file is one big table,except for the first row which is a header.
   3. HeaderAndAdditionalDataTable - when the data starts at some row, and before that there are some global data, which we want to describe each of the rows in the current document.
+ 2. ExcelToAccessExample - a simple WPF application that converts an excel file to a csv, and insert the data into a chosen access database.
+
+
+### Notes:
+ 1. The project is half finished, but it's enough for what I need right now, so I'll probably update it later.
+ 2. Implementing various TableBuilders will require some sort of factory for them, which should read the excel/csv file in order to decide which builder should be used.
