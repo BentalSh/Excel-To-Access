@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSVToDB", "ExcelToDB\CSVToDB.csproj", "{9AA5274F-9DCD-4855-9392-F45BAFA0A6ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelToAccessExample", "ExcelToAccessExample\ExcelToAccessExample.csproj", "{288AA2A1-2CB4-4154-B046-82DD973AD290}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9AA5274F-9DCD-4855-9392-F45BAFA0A6ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AA5274F-9DCD-4855-9392-F45BAFA0A6ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AA5274F-9DCD-4855-9392-F45BAFA0A6ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AA5274F-9DCD-4855-9392-F45BAFA0A6ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{288AA2A1-2CB4-4154-B046-82DD973AD290}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{288AA2A1-2CB4-4154-B046-82DD973AD290}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{288AA2A1-2CB4-4154-B046-82DD973AD290}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{288AA2A1-2CB4-4154-B046-82DD973AD290}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
