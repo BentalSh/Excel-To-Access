@@ -10,6 +10,6 @@ While Access Databases have an import function, which can import excel files whi
 The class TableBuilder is used to read a CSV file and transfer it to the Database. Different implementations of the class can handle various formats and insert it into the database in a correct form.
 The solution contains two projects:
  1. CSVtoDB - a project with the classes used to make a database from excel files. The 3 basic formats are:
- 1. 1. BasicTableBuilder, when the entire file is one big table.
- 1. 2. SimpleHeaderTable - when the entire file is one big table,except for the first row which is a header.
- 1. 3. HeaderAndAdditionalDataTable - when the data starts at some row, and before that there are some global data, which we want to describe each of the rows in the current document.
+  1. BasicTableBuilder, when the entire file is one big table.
+  2. SimpleHeaderTable - when the entire file is one big table,except for the first row which is a header.
+  3. HeaderAndAdditionalDataTable - when the data starts at some row, and before that there are some global data, which we want to describe each of the rows in the current document.
