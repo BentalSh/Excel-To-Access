@@ -1,0 +1,17 @@
+D:\סביבות עבודה\Projects\ExcelToAccess\Excel-To-Access\ExcelToAccessExample\bin\Debug\ExcelToAccessExample.exe.config
+D:\סביבות עבודה\Projects\ExcelToAccess\Excel-To-Access\ExcelToAccessExample\bin\Debug\Data\ExampleDB.accdb
+D:\סביבות עבודה\Projects\ExcelToAccess\Excel-To-Access\ExcelToAccessExample\bin\Debug\ExcelToAccessExample.exe
+D:\סביבות עבודה\Projects\ExcelToAccess\Excel-To-Access\ExcelToAccessExample\bin\Debug\ExcelToAccessExample.pdb
+D:\סביבות עבודה\Projects\ExcelToAccess\Excel-To-Access\ExcelToAccessExample\bin\Debug\ExcelToDB.dll
+D:\סביבות עבודה\Projects\ExcelToAccess\Excel-To-Access\ExcelToAccessExample\bin\Debug\ExcelToDB.pdb
+D:\סביבות עבודה\Projects\ExcelToAccess\Excel-To-Access\ExcelToAccessExample\obj\Debug\ExcelToAccessExample.csprojResolveAssemblyReference.cache
+D:\סביבות עבודה\Projects\ExcelToAccess\Excel-To-Access\ExcelToAccessExample\obj\Debug\MainWindow.baml
+D:\סביבות עבודה\Projects\ExcelToAccess\Excel-To-Access\ExcelToAccessExample\obj\Debug\MainWindow.g.cs
+D:\סביבות עבודה\Projects\ExcelToAccess\Excel-To-Access\ExcelToAccessExample\obj\Debug\App.g.cs
+D:\סביבות עבודה\Projects\ExcelToAccess\Excel-To-Access\ExcelToAccessExample\obj\Debug\ExcelToAccessExample_Content.g.cs
+D:\סביבות עבודה\Projects\ExcelToAccess\Excel-To-Access\ExcelToAccessExample\obj\Debug\ExcelToAccessExample_MarkupCompile.cache
+D:\סביבות עבודה\Projects\ExcelToAccess\Excel-To-Access\ExcelToAccessExample\obj\Debug\ExcelToAccessExample.g.resources
+D:\סביבות עבודה\Projects\ExcelToAccess\Excel-To-Access\ExcelToAccessExample\obj\Debug\ExcelToAccessExample.Properties.Resources.resources
+D:\סביבות עבודה\Projects\ExcelToAccess\Excel-To-Access\ExcelToAccessExample\obj\Debug\ExcelToAccessExample.csproj.GenerateResource.Cache
+D:\סביבות עבודה\Projects\ExcelToAccess\Excel-To-Access\ExcelToAccessExample\obj\Debug\ExcelToAccessExample.exe
+D:\סביבות עבודה\Projects\ExcelToAccess\Excel-To-Access\ExcelToAccessExample\obj\Debug\ExcelToAccessExample.pdb

@@ -1,0 +1,5 @@
+D:\סביבות עבודה\Projects\ExcelToAccess\Excel-To-Access\ExcelToDB\bin\Debug\ExcelToDB.dll
+D:\סביבות עבודה\Projects\ExcelToAccess\Excel-To-Access\ExcelToDB\bin\Debug\ExcelToDB.pdb
+D:\סביבות עבודה\Projects\ExcelToAccess\Excel-To-Access\ExcelToDB\obj\Debug\CSVToDB.csprojResolveAssemblyReference.cache
+D:\סביבות עבודה\Projects\ExcelToAccess\Excel-To-Access\ExcelToDB\obj\Debug\ExcelToDB.dll
+D:\סביבות עבודה\Projects\ExcelToAccess\Excel-To-Access\ExcelToDB\obj\Debug\ExcelToDB.pdb

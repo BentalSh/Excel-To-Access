@@ -30,9 +30,9 @@ namespace ExcelToDB
             double somethingToOut;
             for (int i = 0; i < theData.Count; i++)
             {
-                if (theData[i][columnIndex] == string.Empty || !double.TryParse(theData[i][columnIndex], out somethingToOut))
+                if (theData[i][columnIndex] != string.Empty && !double.TryParse(theData[i][columnIndex], out somethingToOut))
                 {
-                    return "Text";
+                    return "char(50)";
                 }
             }
             return "Double";

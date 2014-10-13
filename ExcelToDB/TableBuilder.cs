@@ -11,18 +11,23 @@ namespace ExcelToDB
 {
     public class TableBuilder
     {
-
+        public TableBuilder()
+        {
+            KeyColumn = -1;
+        }
+        //if not -1, use as key
+        public int KeyColumn { get; set; }
+        public string TableName { get; set; }
         protected virtual string getColName(CSVFile theData, string columnName,int columnIndex)
         {
-            return columnName;
+            return columnName.Replace(".","");
         }
-
         protected virtual string getColType(CSVFile theData, string columnName, int columnIndex)
         {
-            return "Text";
+            return "char(50)";
         }
         //default will be file name
-        public string TableName { get; set; }
+        
 
         public virtual List<string> getColumns(CSVFile theData)
         {
@@ -31,7 +36,7 @@ namespace ExcelToDB
 
         protected virtual string getTableName(CSVFile theData)
         {
-            return theData.FileName.Remove(theData.FileName.LastIndexOf(".")).Substring(theData.FileName.LastIndexOf("\\")+1);
+            return theData.FileName.Remove(theData.FileName.LastIndexOf(".")).Substring(theData.FileName.LastIndexOf("\\")+1).Replace(" ","_");
         }
 
         //just make a column for each column in the csv, with no name
@@ -64,7 +69,14 @@ namespace ExcelToDB
             }
             if (!doesExist)
             {
-                string createTableString = "CREATE TABLE " + TableName + "(ID AUTOINCREMENT)";
+                string createTableString = "CREATE TABLE " + TableName;
+                if (KeyColumn<0) createTableString += " (ID AUTOINCREMENT)";
+                else
+                {
+                    string keyColumnName= getColumns(theData)[KeyColumn];
+                    createTableString += " (" + keyColumnName + " " + getColType(theData, keyColumnName, KeyColumn) + ")";
+                }
+
                 DbCommand createCmd = db.CreateCommand();
                 createCmd.CommandText = createTableString;
                 createCmd.ExecuteNonQuery();
@@ -84,9 +96,17 @@ namespace ExcelToDB
             {
                 for (int i = 0; i < columns.Count; i++)
                 {
-                    addColumn(theData, db, columns[i], "", i);
+                    if (i != KeyColumn) addColumn(theData, db, columns[i], "char(50)", i);
+                    else makeColumnKey(theData, db, columns[i], "char(50)", i);
                 }
             }
+        }
+        protected virtual void makeColumnKey(CSVFile theData, DbConnection db, string columnName, string columnType, int columnIndex)
+        {
+            DbCommand createCmd = db.CreateCommand();
+            createCmd.CommandText = "ALTER TABLE " + TableName + " ADD PRIMARY KEY (" + columnName + ")";
+            createCmd.ExecuteNonQuery();
+
         }
         protected virtual void addColumn(CSVFile theData, DbConnection db, string columnName, string columnType, int columnIndex)
         {
@@ -110,8 +130,9 @@ namespace ExcelToDB
 
             if (!doesColumnExists)
             {
-                string addColumnString = "ALTER TABLE " + TableName + " ADD " + nameToUse + " " + typeToUse;
+                string addColumnString = "ALTER TABLE " + TableName + " ADD `" + nameToUse +  "` " + typeToUse;
                 DbCommand addCmd = db.CreateCommand();
+                DbParameter par = addCmd.CreateParameter();
                 addCmd.CommandText = addColumnString;
                 addCmd.ExecuteNonQuery();
             }
@@ -122,27 +143,74 @@ namespace ExcelToDB
         }
         protected void fillTable(CSVFile theData, DbConnection db, int startIndex)
         {
+            fillTable(theData, db, startIndex, false);
+        }
+        //when last row is summary, you want to ignore it
+        protected void fillTable(CSVFile theData, DbConnection db, int startIndex, bool ignoreLastRow)
+        {
             List<string> columns = getColumns(theData);
-            for (int i = startIndex; i < theData.Count; i++)
+            for (int i = startIndex; i < (ignoreLastRow ? theData.Count -1: theData.Count); i++)
             {
-                DbCommand insertCmd = db.CreateCommand();
-                string valuesString = "";
-                string columnsString = "";
-                string insertSql = "insert into " + TableName;
-                for (int j = 0; j < theData[i].Count; j++)
-                {
-                    DbParameter par =  insertCmd.CreateParameter();
-                    par.ParameterName = "@Value" + j.ToString();
-                    par.Value = theData[i][j];
-                    valuesString += ((j > 0) ? "," : "") + "@Value" + j.ToString();
-                    columnsString += ((j > 0) ? "," : "") + columns[j];
-                    insertCmd.Parameters.Add(par);
-                }
-                insertSql += " (" + columnsString + ") values (" + valuesString + ")";
-                insertCmd.CommandText = insertSql;
-                insertCmd.ExecuteNonQuery();
-                
+                fillRow(db, i, columns, theData[i]);
             }
+        }
+          
+        protected void fillRow(DbConnection db, int rowToWorkOn, List<string> columns, List<string> values)
+        {
+            bool shouldUpdate = false;
+            if (KeyColumn >= 0) //then first check if exists
+            {
+                DbCommand checkIfRowExists = db.CreateCommand();
+                checkIfRowExists.CommandText = "SELECT COUNT(*) FROM " + TableName + " WHERE " + columns[KeyColumn] + "=@Value";
+                DbParameter idParam = checkIfRowExists.CreateParameter();
+                idParam.ParameterName = "@Value";
+                idParam.Value = values[KeyColumn];
+                checkIfRowExists.Parameters.Add(idParam);
+                shouldUpdate = ((int)checkIfRowExists.ExecuteScalar()) > 0;
+            }
+            DbCommand updateOrInsertCmd = db.CreateCommand();
+            string valuesString = "";
+            string columnsString = "";
+            string cmdSql;
+            if (!shouldUpdate) cmdSql = "insert into " + TableName;
+            else
+            {
+                cmdSql = "update " + TableName;
+                columnsString = " set ";
+            }
+
+            for (int j = 0; j < Math.Min(values.Count, columns.Count); j++)
+            {
+                if (!shouldUpdate)
+                {
+                    valuesString += ((j > 0) ? "," : "") + "@Value" + j.ToString();
+                    columnsString += ((j > 0) ? "," : "") + "[" + columns[j] + "]";
+                }
+                else
+                {
+                    if (j == KeyColumn)
+                        continue;
+                    columnsString += ((j > 0 && (KeyColumn==0 && j>1)) ? "," : "") + "[" + columns[j] + "]=@Value" + j.ToString();
+
+                }
+                DbParameter par = updateOrInsertCmd.CreateParameter();
+                par.ParameterName = "@Value" + j.ToString();
+                if (values[j] == "") par.Value = DBNull.Value;
+                else par.Value = values[j];
+                updateOrInsertCmd.Parameters.Add(par);
+            }
+            if (!shouldUpdate)
+                cmdSql += " (" + columnsString + ") values (" + valuesString + ")";
+            else
+            {
+                cmdSql += columnsString + " where [" + columns[KeyColumn] + "]=@KeyValue";
+                DbParameter keyParam = updateOrInsertCmd.CreateParameter();
+                keyParam.ParameterName = "@KeyValue";
+                keyParam.Value = values[KeyColumn];
+                updateOrInsertCmd.Parameters.Add(keyParam);
+            }
+            updateOrInsertCmd.CommandText = cmdSql;
+            updateOrInsertCmd.ExecuteNonQuery();
         }
     }
 }
